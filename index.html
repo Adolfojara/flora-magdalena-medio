@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Géneros de Plantas Vasculares — Magdalena Medio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&family=Source+Code+Pro:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep:  #1a3320;
+      --green-mid:   #2d5a3d;
+      --green-light: #4a8c5c;
+      --gold:        #c9a94a;
+      --cream:       #f5f0e8;
+      --sand:        #e8dfc8;
+      --text:        #1c1c1c;
+      --muted:       #6b6b5a;
+      --white:       #ffffff;
+      --border:      #d4c9b0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--green-deep);
+      color: var(--white);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .site-title {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.01em;
+      flex-shrink: 0;
+      line-height: 1.2;
+    }
+    .site-subtitle {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .header-stats {
+      margin-left: auto;
+      display: flex;
+      gap: 20px;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+    }
+    .stat-item strong { color: var(--gold); font-weight: 600; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-mid) 60%, #3a7a50 100%);
+      color: var(--white);
+      padding: 56px 24px 48px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero h1 {
+      font-family: 'Lora', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 600;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 600px;
+      margin: 0 auto 28px;
+      line-height: 1.65;
+      position: relative;
+    }
+
+    /* ── SEARCH BAR ── */
+    .search-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+    #search {
+      width: 100%;
+      padding: 14px 52px 14px 18px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--text);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      outline: none;
+    }
+    #search::placeholder { color: #aaa; }
+    .search-icon {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--green-mid);
+      font-size: 1.1rem;
+    }
+
+    /* ── FILTERS ── */
+    .filters-bar {
+      max-width: 1400px;
+      margin: 24px auto 0;
+      padding: 0 24px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .filter-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    #family-filter {
+      padding: 7px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      background: var(--white);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      cursor: pointer;
+      min-width: 200px;
+    }
+    .view-btns {
+      margin-left: auto;
+      display: flex;
+      gap: 6px;
+    }
+    .view-btn {
+      padding: 7px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      background: var(--white);
+      font-size: 0.82rem;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      transition: all 0.15s;
+    }
+    .view-btn.active {
+      background: var(--green-mid);
+      border-color: var(--green-mid);
+      color: var(--white);
+    }
+    .results-count {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      max-width: 1400px;
+      margin: 24px auto;
+      padding: 0 24px 60px;
+    }
+
+    /* ── FAMILY GROUP VIEW ── */
+    .family-section { margin-bottom: 36px; }
+    .family-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      padding: 10px 0 8px;
+      border-bottom: 2px solid var(--green-mid);
+      margin-bottom: 14px;
+    }
+    .family-name {
+      font-family: 'Lora', serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      font-style: italic;
+      color: var(--green-deep);
+    }
+    .family-count {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .genus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+
+    /* ── GENUS CARD ── */
+    .genus-card {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.18s;
+      position: relative;
+    }
+    .genus-card:hover {
+      border-color: var(--green-light);
+      box-shadow: 0 3px 14px rgba(45,90,61,0.12);
+      transform: translateY(-1px);
+    }
+    .genus-card.has-data { border-left: 3px solid var(--gold); }
+    .genus-name {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--green-deep);
+      margin-bottom: 4px;
+    }
+    .genus-family-tag {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .genus-desc-preview {
+      font-size: 0.78rem;
+      color: #555;
+      margin-top: 6px;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-links {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+    }
+    .card-link {
+      font-size: 0.68rem;
+      color: var(--green-mid);
+      text-decoration: none;
+      border: 1px solid var(--border);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 500;
+      transition: all 0.15s;
+    }
+    .card-link:hover {
+      background: var(--green-mid);
+      color: var(--white);
+      border-color: var(--green-mid);
+    }
+
+    /* ── LIST VIEW ── */
+    .genus-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .genus-table th {
+      background: var(--green-deep);
+      color: var(--white);
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .genus-table td {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--sand);
+      font-size: 0.88rem;
+    }
+    .genus-table tr:last-child td { border-bottom: none; }
+    .genus-table tr:hover td { background: var(--cream); }
+    .genus-table .td-genus {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--green-deep);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .genus-table .td-genus:hover { text-decoration: underline; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(10,25,15,0.65);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 12px;
+      max-width: 720px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .modal-header {
+      background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+      color: var(--white);
+      padding: 24px 28px;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .modal-genus-name {
+      font-family: 'Lora', serif;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: 400;
+    }
+    .modal-family-name {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.65);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-top: 4px;
+    }
+    .modal-close {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: var(--white);
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-left: 16px;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.25); }
+    .modal-body { padding: 28px; }
+    .modal-image-wrap {
+      width: 100%;
+      height: 200px;
+      border-radius: 8px;
+      background: var(--sand);
+      overflow: hidden;
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .modal-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .modal-section { margin-bottom: 20px; }
+    .modal-section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--green-light);
+      margin-bottom: 6px;
+    }
+    .modal-section-body {
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .modal-section-body.empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+    .modal-diversity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .diversity-box {
+      background: var(--cream);
+      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid var(--border);
+    }
+    .diversity-box .label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .diversity-box .value {
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+    .diversity-box .value.empty { color: var(--muted); font-style: italic; }
+    .modal-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+    }
+    .modal-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .modal-link.gbif { background: #e8f4e8; color: #2d5a3d; border: 1px solid #b5d6b5; }
+    .modal-link.gbif:hover { background: #2d5a3d; color: #fff; }
+    .modal-link.tropicos { background: #e8eef8; color: #2c4a8a; border: 1px solid #b5c6e0; }
+    .modal-link.tropicos:hover { background: #2c4a8a; color: #fff; }
+    .modal-link.powo { background: #f8f0e8; color: #7a4a2a; border: 1px solid #d6bfa0; }
+    .modal-link.powo:hover { background: #7a4a2a; color: #fff; }
+    .modal-link.inat { background: #f0f8e8; color: #4a7a2a; border: 1px solid #b0d080; }
+    .modal-link.inat:hover { background: #4a7a2a; color: #fff; }
+
+    /* ── EDIT FORM ── */
+    .edit-form { margin-top: 24px; padding-top: 20px; border-top: 1px dashed var(--border); }
+    .edit-form h3 {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+    .form-row { margin-bottom: 12px; }
+    .form-row label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .form-row input, .form-row textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .form-row input:focus, .form-row textarea:focus { border-color: var(--green-light); }
+    .form-row textarea { min-height: 80px; resize: vertical; }
+    .save-btn {
+      background: var(--green-mid);
+      color: var(--white);
+      border: none;
+      padding: 10px 22px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .save-btn:hover { background: var(--green-deep); }
+    .save-msg {
+      font-size: 0.8rem;
+      color: var(--green-mid);
+      margin-left: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .save-msg.show { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--green-deep);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 24px;
+      font-size: 0.78rem;
+      line-height: 1.7;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+    .empty-state p { font-size: 1rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .header-stats { display: none; }
+      .view-btns { display: none; }
+      .genus-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .modal-diversity-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="site-title">Flora del Magdalena Medio</div>
+      <div class="site-subtitle">Géneros de plantas vasculares</div>
+    </div>
+    <div class="header-stats">
+      <span><strong id="stat-genera">—</strong> géneros</span>
+      <span><strong id="stat-families">—</strong> familias</span>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>Géneros del <em>Magdalena Medio</em></h1>
+  <p>Catálogo interactivo de los géneros de plantas vasculares registrados en la región. Consulta distribución, diversidad y referencias bibliográficas.</p>
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Buscar género o familia…" autocomplete="off" />
+    <span class="search-icon">🔍</span>
+  </div>
+</section>
+
+<div class="filters-bar">
+  <span class="filter-label">Filtrar por familia:</span>
+  <select id="family-filter">
+    <option value="">Todas las familias</option>
+  </select>
+  <span class="results-count" id="results-count"></span>
+  <div class="view-btns">
+    <button class="view-btn active" data-view="grid">▦ Fichas</button>
+    <button class="view-btn" data-view="list">≡ Lista</button>
+  </div>
+</div>
+
+<main id="main-content">
+  <div class="empty-state">
+    <div class="icon">🌿</div>
+    <p>Cargando géneros…</p>
+  </div>
+</main>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" role="dialog" aria-modal="true">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-genus-name" id="modal-genus"></div>
+        <div class="modal-family-name" id="modal-family"></div>
+      </div>
+      <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-image-wrap" id="modal-image-wrap">
+        <span>Sin imagen disponible — agrega una URL en el formulario</span>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Descripción / Caracteres diagnósticos</div>
+        <div class="modal-section-body" id="modal-description"></div>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title">Distribución en el Magdalena Medio</div>
+        <div class="modal-section-body" id="modal-distribution"></div>
+      </div>
+
+      <div class="modal-diversity-grid">
+        <div class="diversity-box">
+          <div class="label">🌍 Diversidad global</div>
+          <div class="value" id="modal-global-div"></div>
+        </div>
+        <div class="diversity-box">
+          <div class="label">🇨🇴 Diversidad regional</div>
+          <div class="value" id="modal-regional-div"></div>
+        </div>
+      </div>
+
+      <div class="modal-section" id="modal-notes-section">
+        <div class="modal-section-title">Notas adicionales</div>
+        <div class="modal-section-body" id="modal-notes"></div>
+      </div>
+
+      <div class="modal-links" id="modal-links"></div>
+
+      <!-- Edit form -->
+      <div class="edit-form">
+        <h3>✏️ Editar información de este género</h3>
+        <div class="form-row">
+          <label>Descripción / Caracteres diagnósticos</label>
+          <textarea id="edit-description" placeholder="Rasgos morfológicos que distinguen al género…"></textarea>
+        </div>
+        <div class="form-row">
+          <label>Distribución en el Magdalena Medio</label>
+          <textarea id="edit-distribution" placeholder="Dónde y en qué ecosistemas se ha registrado…"></textarea>
+        </div>
+        <div class="form-row">
+          <label>Diversidad global (ej: ~200 spp. en trópicos de América)</label>
+          <input type="text" id="edit-global-div" placeholder="Número de especies y rango global…" />
+        </div>
+        <div class="form-row">
+          <label>Diversidad regional (Colombia / Magdalena Medio)</label>
+          <input type="text" id="edit-regional-div" placeholder="Especies registradas en la región…" />
+        </div>
+        <div class="form-row">
+          <label>Notas adicionales</label>
+          <textarea id="edit-notes" placeholder="Usos, importancia ecológica, referencias…"></textarea>
+        </div>
+        <div class="form-row">
+          <label>URL de imagen (iNaturalist, GBIF, Wikimedia…)</label>
+          <input type="url" id="edit-image-url" placeholder="https://…" />
+        </div>
+        <button class="save-btn" id="save-btn">Guardar cambios</button>
+        <span class="save-msg" id="save-msg">✓ Guardado</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Flora del Magdalena Medio · Plantas Vasculares · Datos de colecciones depositadas en herbarios colombianos</p>
+  <p>Fuentes de referencia: <a href="https://www.gbif.org" target="_blank">GBIF</a> · <a href="https://www.tropicos.org" target="_blank">Tropicos</a> · <a href="https://powo.science.kew.org" target="_blank">Plants of the World Online</a> · <a href="https://www.inaturalist.org" target="_blank">iNaturalist</a></p>
+</footer>
+
+<script>
+  let ALL_DATA = [];
+  let currentData = [];
+  let currentView = 'grid';
+  let currentGenus = null;
+  let localEdits = {};
+
+  // Load saved edits from localStorage
+  try {
+    const saved = localStorage.getItem('mm_genera_edits');
+    if (saved) localEdits = JSON.parse(saved);
+  } catch(e) {}
+
+  function saveEdits() {
+    try { localStorage.setItem('mm_genera_edits', JSON.stringify(localEdits)); } catch(e) {}
+  }
+
+  function mergeEdits(item) {
+    const key = item.genus;
+    if (localEdits[key]) return { ...item, ...localEdits[key] };
+    return item;
+  }
+
+  async function loadData() {
+    try {
+      const res = await fetch('data.json');
+      const raw = await res.json();
+      ALL_DATA = raw.map(mergeEdits);
+      document.getElementById('stat-genera').textContent = ALL_DATA.length.toLocaleString();
+      const famCount = new Set(ALL_DATA.map(g => g.family)).size;
+      document.getElementById('stat-families').textContent = famCount;
+      populateFamilyFilter();
+      renderView();
+    } catch(e) {
+      document.getElementById('main-content').innerHTML = '<div class="empty-state"><div class="icon">⚠️</div><p>Error cargando datos. Verifica que data.json esté en la misma carpeta que index.html.</p></div>';
+    }
+  }
+
+  function populateFamilyFilter() {
+    const sel = document.getElementById('family-filter');
+    const families = [...new Set(ALL_DATA.map(g => g.family))].sort();
+    families.forEach(f => {
+      const opt = document.createElement('option');
+      opt.value = f; opt.textContent = f;
+      sel.appendChild(opt);
+    });
+  }
+
+  function getFiltered() {
+    const q = document.getElementById('search').value.trim().toLowerCase();
+    const fam = document.getElementById('family-filter').value;
+    return ALL_DATA.filter(g => {
+      const matchQ = !q || g.genus.toLowerCase().includes(q) || g.family.toLowerCase().includes(q) ||
+                     (g.description && g.description.toLowerCase().includes(q));
+      const matchF = !fam || g.family === fam;
+      return matchQ && matchF;
+    });
+  }
+
+  function renderView() {
+    currentData = getFiltered();
+    document.getElementById('results-count').textContent = `${currentData.length.toLocaleString()} géneros`;
+    if (currentView === 'grid') renderGrid();
+    else renderList();
+  }
+
+  function renderGrid() {
+    const main = document.getElementById('main-content');
+    if (!currentData.length) {
+      main.innerHTML = '<div class="empty-state"><div class="icon">🌿</div><p>No se encontraron géneros con ese criterio.</p></div>';
+      return;
+    }
+    // Group by family
+    const byFamily = {};
+    currentData.forEach(g => {
+      if (!byFamily[g.family]) byFamily[g.family] = [];
+      byFamily[g.family].push(g);
+    });
+    let html = '';
+    Object.keys(byFamily).sort().forEach(fam => {
+      const genera = byFamily[fam];
+      html += `<div class="family-section">
+        <div class="family-header">
+          <span class="family-name">${fam}</span>
+          <span class="family-count">${genera.length} género${genera.length>1?'s':''}</span>
+        </div>
+        <div class="genus-grid">`;
+      genera.forEach(g => {
+        const hasData = g.description || g.distribution_mm || g.global_diversity || g.regional_diversity;
+        html += `<div class="genus-card ${hasData?'has-data':''}" onclick="openModal('${g.genus.replace(/'/g,"\\'")}')">
+          <div class="genus-name">${g.genus}</div>
+          <div class="genus-family-tag">${g.family}</div>
+          ${g.description ? `<div class="genus-desc-preview">${g.description}</div>` : ''}
+          <div class="card-links">
+            <a class="card-link" href="${g.gbif_url}" target="_blank" onclick="event.stopPropagation()">GBIF</a>
+            <a class="card-link" href="${g.tropicos_url}" target="_blank" onclick="event.stopPropagation()">Tropicos</a>
+          </div>
+        </div>`;
+      });
+      html += '</div></div>';
+    });
+    main.innerHTML = html;
+  }
+
+  function renderList() {
+    const main = document.getElementById('main-content');
+    if (!currentData.length) {
+      main.innerHTML = '<div class="empty-state"><div class="icon">🌿</div><p>No se encontraron géneros con ese criterio.</p></div>';
+      return;
+    }
+    let html = `<table class="genus-table">
+      <thead><tr>
+        <th>Género</th><th>Familia</th><th>Distribución</th><th>Diversidad global</th><th>Diversidad regional</th>
+      </tr></thead><tbody>`;
+    currentData.forEach(g => {
+      html += `<tr>
+        <td class="td-genus" onclick="openModal('${g.genus.replace(/'/g,"\\'")}'">${g.genus}</td>
+        <td>${g.family}</td>
+        <td>${g.distribution_mm || '<span style="color:#aaa">—</span>'}</td>
+        <td>${g.global_diversity || '<span style="color:#aaa">—</span>'}</td>
+        <td>${g.regional_diversity || '<span style="color:#aaa">—</span>'}</td>
+      </tr>`;
+    });
+    html += '</tbody></table>';
+    main.innerHTML = html;
+  }
+
+  function openModal(genusName) {
+    currentGenus = ALL_DATA.find(g => g.genus === genusName);
+    if (!currentGenus) return;
+    const g = currentGenus;
+
+    document.getElementById('modal-genus').textContent = g.genus;
+    document.getElementById('modal-family').textContent = g.family;
+
+    // Image
+    const imgWrap = document.getElementById('modal-image-wrap');
+    if (g.image_url) {
+      imgWrap.innerHTML = `<img src="${g.image_url}" alt="${g.genus}" onerror="this.parentElement.innerHTML='<span>Imagen no disponible</span>'" />`;
+    } else {
+      imgWrap.innerHTML = '<span>Sin imagen — agrega una URL abajo</span>';
+    }
+
+    const setField = (id, val, empty='Sin información disponible') => {
+      const el = document.getElementById(id);
+      if (val) { el.textContent = val; el.classList.remove('empty'); }
+      else { el.textContent = empty; el.classList.add('empty'); }
+    };
+
+    setField('modal-description', g.description);
+    setField('modal-distribution', g.distribution_mm);
+    setField('modal-global-div', g.global_diversity, '—');
+    setField('modal-regional-div', g.regional_diversity, '—');
+    setField('modal-notes', g.notes);
+
+    document.getElementById('modal-notes-section').style.display = g.notes ? 'block' : 'none';
+
+    // Links
+    const linksEl = document.getElementById('modal-links');
+    linksEl.innerHTML = `
+      <a class="modal-link gbif" href="${g.gbif_url}" target="_blank">🌐 GBIF</a>
+      <a class="modal-link tropicos" href="${g.tropicos_url}" target="_blank">🔬 Tropicos</a>
+      <a class="modal-link powo" href="https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:${g.genus}" target="_blank">🌿 POWO</a>
+      <a class="modal-link inat" href="https://www.inaturalist.org/taxa?q=${encodeURIComponent(g.genus)}" target="_blank">📸 iNaturalist</a>
+    `;
+
+    // Prefill edit form
+    document.getElementById('edit-description').value = g.description || '';
+    document.getElementById('edit-distribution').value = g.distribution_mm || '';
+    document.getElementById('edit-global-div').value = g.global_diversity || '';
+    document.getElementById('edit-regional-div').value = g.regional_diversity || '';
+    document.getElementById('edit-notes').value = g.notes || '';
+    document.getElementById('edit-image-url').value = g.image_url || '';
+
+    document.getElementById('save-msg').classList.remove('show');
+    document.getElementById('modal-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+    currentGenus = null;
+  }
+
+  document.getElementById('modal-close').addEventListener('click', closeModal);
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target === e.currentTarget) closeModal();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  document.getElementById('save-btn').addEventListener('click', () => {
+    if (!currentGenus) return;
+    const key = currentGenus.genus;
+    const edits = {
+      description: document.getElementById('edit-description').value.trim(),
+      distribution_mm: document.getElementById('edit-distribution').value.trim(),
+      global_diversity: document.getElementById('edit-global-div').value.trim(),
+      regional_diversity: document.getElementById('edit-regional-div').value.trim(),
+      notes: document.getElementById('edit-notes').value.trim(),
+      image_url: document.getElementById('edit-image-url').value.trim(),
+    };
+    localEdits[key] = edits;
+    saveEdits();
+    Object.assign(currentGenus, edits);
+    // Update ALL_DATA entry
+    const idx = ALL_DATA.findIndex(g => g.genus === key);
+    if (idx > -1) Object.assign(ALL_DATA[idx], edits);
+    renderView();
+    openModal(key); // refresh modal view
+    document.getElementById('save-msg').classList.add('show');
+    setTimeout(() => document.getElementById('save-msg').classList.remove('show'), 2000);
+  });
+
+  // Search & filter
+  document.getElementById('search').addEventListener('input', renderView);
+  document.getElementById('family-filter').addEventListener('change', renderView);
+
+  // View toggle
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentView = btn.dataset.view;
+      renderView();
+    });
+  });
+
+  loadData();
+</script>
+</body>
+</html>
